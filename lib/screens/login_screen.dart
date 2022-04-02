@@ -90,11 +90,21 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 child: const Text('LOGIN'),
                 onPressed: () async {
-                  await FirebaseService().signIn(
-                    context,
-                    _emailCtrl.text,
-                    _passwordCtrl.text,
-                  );
+                  if (currentUser != null) {
+                    if (currentUser?.emailVerified ?? false) {
+                      await FirebaseService().signIn(
+                        context,
+                        _emailCtrl.text,
+                        _passwordCtrl.text,
+                      );
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please verify your email first'),
+                      ),
+                    );
+                  }
                 },
               ),
               const SizedBox(height: 8.0),

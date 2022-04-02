@@ -191,3 +191,15 @@ final SnackBar snackWrongPassword = SnackBar(
     onPressed: () {},
   ),
 );
+
+final SnackBar snackEmailVerificationSent = SnackBar(
+  content: const Text(
+    'Email verification sent! Please check your email/spam!',
+    style: TextStyle(fontWeight: FontWeight.w600),
+  ),
+  duration: const Duration(seconds: 3),
+  action: SnackBarAction(
+    label: 'OK',
+    onPressed: () {},
+  ),
+);

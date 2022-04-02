@@ -4,13 +4,20 @@ class FirebaseService {
   /*SIGN UP METHOD*/
   Future<void> signUp(context, String email, String password) async {
     try {
-      await firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      final UserCredential? userCredential = await firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
       if (kDebugMode) {
         print('User signed up');
       }
       ScaffoldMessenger.of(context).showSnackBar(
         snackSignUpSucces,
+      );
+      await userCredential?.user?.sendEmailVerification();
+      if (kDebugMode) {
+        print('Email verification email sent');
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        snackEmailVerificationSent,
       );
       Navigator.of(context).pushReplacementNamed('login_screen');
     } on FirebaseAuthException catch (e) {
