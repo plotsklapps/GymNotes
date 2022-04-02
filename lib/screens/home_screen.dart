@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:gymnotes/all_imports.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -31,15 +31,11 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: const Text('Fake Item 1'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('Fake Item 2'),
-              onTap: () {
-                Navigator.pop(context);
+              title: const Text('Sign out'),
+              onTap: () async {
+                await FirebaseService().signOut(
+                  context,
+                );
               },
             ),
           ],
