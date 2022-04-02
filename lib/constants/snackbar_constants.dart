@@ -203,3 +203,15 @@ final SnackBar snackEmailVerificationSent = SnackBar(
     onPressed: () {},
   ),
 );
+
+final SnackBar snackVerifyEmailFirst = SnackBar(
+  content: const Text(
+    'Please verify your email first!',
+    style: TextStyle(fontWeight: FontWeight.w600),
+  ),
+  duration: const Duration(seconds: 3),
+  action: SnackBarAction(
+    label: 'OK',
+    onPressed: () {},
+  ),
+);
