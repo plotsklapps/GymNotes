@@ -167,3 +167,27 @@ final SnackBar snackResetPasswordFail = SnackBar(
     onPressed: () {},
   ),
 );
+
+final SnackBar snackUserNotFound = SnackBar(
+  content: const Text(
+    'User not found! Try to register!',
+    style: TextStyle(fontWeight: FontWeight.w600),
+  ),
+  duration: const Duration(seconds: 3),
+  action: SnackBarAction(
+    label: 'OK',
+    onPressed: () {},
+  ),
+);
+
+final SnackBar snackWrongPassword = SnackBar(
+  content: const Text(
+    'Wrong password! Please check spelling!',
+    style: TextStyle(fontWeight: FontWeight.w600),
+  ),
+  duration: const Duration(seconds: 3),
+  action: SnackBarAction(
+    label: 'OK',
+    onPressed: () {},
+  ),
+);

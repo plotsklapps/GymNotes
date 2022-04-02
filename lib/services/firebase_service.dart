@@ -78,9 +78,52 @@ class FirebaseService {
         snackSignInSucces,
       );
       Navigator.of(context).pushReplacementNamed('home_screen');
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'invalid-email':
+          {
+            if (kDebugMode) {
+              print('Invalid email, check spelling');
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackInvalidEmail,
+            );
+            break;
+          }
+        case 'user-disabled':
+          {
+            if (kDebugMode) {
+              print('User is disabled');
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackSignUpNotAllowed,
+            );
+            break;
+          }
+        case 'user-not-found':
+          {
+            if (kDebugMode) {
+              print('No user found with this email');
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackUserNotFound,
+            );
+            break;
+          }
+        case 'wrong-password':
+          {
+            if (kDebugMode) {
+              print('Wrong password! Check spelling!');
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackWrongPassword,
+            );
+            break;
+          }
+      }
     } catch (e) {
       if (kDebugMode) {
-        print('Error signing in: $e');
+        print('Error signing up: $e');
       }
       ScaffoldMessenger.of(context).showSnackBar(
         snackSignInFail,
@@ -120,9 +163,32 @@ class FirebaseService {
         snackResetPasswordSucces,
       );
       Navigator.of(context).pushReplacementNamed('login_screen');
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
+        case 'auth/invalid-email':
+          {
+            if (kDebugMode) {
+              print('Invalid email, check spelling');
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackInvalidEmail,
+            );
+            break;
+          }
+        case 'user-not-found':
+          {
+            if (kDebugMode) {
+              print('No user found with this email');
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              snackUserNotFound,
+            );
+            break;
+          }
+      }
     } catch (e) {
       if (kDebugMode) {
-        print('Error resetting password: $e');
+        print('Error signing up: $e');
       }
       ScaffoldMessenger.of(context).showSnackBar(
         snackResetPasswordFail,
