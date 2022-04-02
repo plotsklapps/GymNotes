@@ -108,4 +108,25 @@ class FirebaseService {
       );
     }
   }
+
+  /*RECOVER PASSWORD METHOD*/
+  Future<void> resetPassword(context, String email) async {
+    try {
+      await firebaseAuth.sendPasswordResetEmail(email: email);
+      if (kDebugMode) {
+        print('Password reset email sent');
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        snackResetPasswordSucces,
+      );
+      Navigator.of(context).pushReplacementNamed('login_screen');
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error resetting password: $e');
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        snackResetPasswordFail,
+      );
+    }
+  }
 }

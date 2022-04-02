@@ -143,3 +143,27 @@ final SnackBar snackEmptyFields = SnackBar(
     onPressed: () {},
   ),
 );
+
+final SnackBar snackResetPasswordSucces = SnackBar(
+  content: const Text(
+    'Password reset email sent!',
+    style: TextStyle(fontWeight: FontWeight.w600),
+  ),
+  duration: const Duration(seconds: 3),
+  action: SnackBarAction(
+    label: 'OK',
+    onPressed: () {},
+  ),
+);
+
+final SnackBar snackResetPasswordFail = SnackBar(
+  content: const Text(
+    'Something went wrong!',
+    style: TextStyle(fontWeight: FontWeight.w600),
+  ),
+  duration: const Duration(seconds: 3),
+  action: SnackBarAction(
+    label: 'OK',
+    onPressed: () {},
+  ),
+);
