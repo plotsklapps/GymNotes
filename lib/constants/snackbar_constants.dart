@@ -216,6 +216,18 @@ final SnackBar snackEmailVerificationSent = SnackBar(
   ),
 );
 
+final SnackBar snackEmailVerificationFail = SnackBar(
+  content: const Text(
+    'Something went wrong! Verification email NOT sent!',
+    style: TextStyle(fontWeight: FontWeight.w600),
+  ),
+  duration: const Duration(seconds: 3),
+  action: SnackBarAction(
+    label: 'OK',
+    onPressed: () {},
+  ),
+);
+
 final SnackBar snackVerifyEmailFirst = SnackBar(
   content: const Text(
     'Please verify your email first!',

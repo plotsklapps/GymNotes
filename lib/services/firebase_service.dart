@@ -10,6 +10,7 @@ class FirebaseService {
       ScaffoldMessenger.of(context).showSnackBar(
         snackSignUpSucces,
       );
+      /*SEND EMAIL VERIFICATION AND GO TO LOGINSCREEN*/
       await userCredential?.user?.sendEmailVerification();
       Logger().i('Verification email sent');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -24,7 +25,7 @@ class FirebaseService {
             ScaffoldMessenger.of(context).showSnackBar(
               snackWeakPassword,
             );
-            break;
+            throw WeakPasswordException();
           }
         case 'email-already-in-use':
           {
@@ -32,7 +33,7 @@ class FirebaseService {
             ScaffoldMessenger.of(context).showSnackBar(
               snackEmailAlreadyInUse,
             );
-            break;
+            throw EmailAlreadyInUseException();
           }
         case 'operation-not-allowed':
           {
@@ -41,7 +42,7 @@ class FirebaseService {
             ScaffoldMessenger.of(context).showSnackBar(
               snackSignUpNotAllowed,
             );
-            break;
+            throw OperationNotAllowedException();
           }
         case 'invalid-email':
           {
@@ -49,7 +50,7 @@ class FirebaseService {
             ScaffoldMessenger.of(context).showSnackBar(
               snackInvalidEmail,
             );
-            break;
+            throw InvalidEmailException();
           }
       }
     } catch (e) {
@@ -57,6 +58,7 @@ class FirebaseService {
       ScaffoldMessenger.of(context).showSnackBar(
         snackSignUpFail,
       );
+      throw GenericException();
     }
   }
 
@@ -161,7 +163,7 @@ class FirebaseService {
     }
   }
 
-  /*RECOVER PASSWORD METHOD*/
+  /*RESET PASSWORD METHOD*/
   Future<void> resetPassword(context, String email) async {
     try {
       await firebaseAuth.sendPasswordResetEmail(email: email);
