@@ -1,8 +1,13 @@
 import 'package:gymnotes/all_imports.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,8 +46,17 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: const Center(
-        child: Text('Welcome to GymNotes!'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text('Welcome to Gymnotes!'),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('Start New Workout'),
+            ),
+          ],
+        ),
       ),
     );
   }
