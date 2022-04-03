@@ -76,31 +76,52 @@ class FirebaseService {
   /*SIGN IN METHOD*/
   Future<void> signIn(context, String email, String password) async {
     try {
-      await firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
-      /*IF USER CLICKED VERIFICATION EMAIL*/
-      if (firebaseAuth.currentUser!.emailVerified) {
+      /*CHECK IF TEXTFIELDS ARE EMPTY*/
+      if (email.isEmpty || password.isEmpty) {
         if (kDebugMode) {
-          print('User is verified');
+          print('Email or password is empty');
         }
         ScaffoldMessenger.of(context).showSnackBar(
-          snackEmailVerified,
+          snackEmptyFields,
         );
-        Navigator.pushReplacementNamed(
-          context,
-          'home_screen',
-        );
-      }
-      /*IF USER DID NOT CLICK VERIFICATION EMAIL*/
-      else if (!firebaseAuth.currentUser!.emailVerified) {
+        return;
+        /*CHECK IF EMAIL SPELLING IS CORRECT*/
+      } else if (!email.contains('@') || email.contains(' ')) {
         if (kDebugMode) {
-          print('User is NOT verified');
+          print('Email is invalid');
         }
         ScaffoldMessenger.of(context).showSnackBar(
-          snackVerifyEmailFirst,
+          snackInvalidEmail,
         );
+        return;
+      } else {
+        /*FIREBASE SIGN IN METHOD*/
+        await firebaseAuth.signInWithEmailAndPassword(
+            email: email, password: password);
+        /*IF USER CLICKED VERIFICATION EMAIL GO TO HOMESCREEN*/
+        if (firebaseAuth.currentUser!.emailVerified) {
+          if (kDebugMode) {
+            print('User is verified');
+          }
+          ScaffoldMessenger.of(context).showSnackBar(
+            snackEmailVerified,
+          );
+          Navigator.pushReplacementNamed(
+            context,
+            'home_screen',
+          );
+        }
+        /*IF USER DID NOT CLICK VERIFICATION EMAIL SHOW SNACK AND STAY*/
+        else if (!firebaseAuth.currentUser!.emailVerified) {
+          if (kDebugMode) {
+            print('User is NOT verified');
+          }
+          ScaffoldMessenger.of(context).showSnackBar(
+            snackVerifyEmailFirst,
+          );
+        }
       }
-      /*ALL OTHER ERROR SITUATIONS*/
+      /*ALL OTHER FIREBASE ERROR SITUATIONS*/
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'invalid-email':
