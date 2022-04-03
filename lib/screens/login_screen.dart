@@ -10,6 +10,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController _emailCtrl;
   late final TextEditingController _passwordCtrl;
+  bool isEmailVerified = false;
 
   @override
   void initState() {
@@ -90,19 +91,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ElevatedButton(
                 child: const Text('LOGIN'),
                 onPressed: () async {
-                  //TODO: Fix this! It's not working! Always returns false!
-                  if (currentUser?.emailVerified ?? false) {
-                    await FirebaseService().signIn(
-                      context,
-                      _emailCtrl.text,
-                      _passwordCtrl.text,
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      snackVerifyEmailFirst,
-                    );
-                  }
-                  return;
+                  await FirebaseService().signIn(
+                    context,
+                    _emailCtrl.text,
+                    _passwordCtrl.text,
+                  );
                 },
               ),
               const SizedBox(height: 8.0),

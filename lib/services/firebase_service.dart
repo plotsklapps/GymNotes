@@ -14,7 +14,7 @@ class FirebaseService {
       );
       await userCredential?.user?.sendEmailVerification();
       if (kDebugMode) {
-        print('Email verification email sent');
+        print('Verification email sent');
       }
       ScaffoldMessenger.of(context).showSnackBar(
         snackEmailVerificationSent,
@@ -78,13 +78,29 @@ class FirebaseService {
     try {
       await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      if (kDebugMode) {
-        print('User signed in');
+      /*IF USER CLICKED VERIFICATION EMAIL*/
+      if (firebaseAuth.currentUser!.emailVerified) {
+        if (kDebugMode) {
+          print('User is verified');
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          snackEmailVerified,
+        );
+        Navigator.pushReplacementNamed(
+          context,
+          'home_screen',
+        );
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        snackSignInSucces,
-      );
-      Navigator.of(context).pushReplacementNamed('home_screen');
+      /*IF USER DID NOT CLICK VERIFICATION EMAIL*/
+      else if (!firebaseAuth.currentUser!.emailVerified) {
+        if (kDebugMode) {
+          print('User is NOT verified');
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          snackVerifyEmailFirst,
+        );
+      }
+      /*ALL OTHER ERROR SITUATIONS*/
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'invalid-email':

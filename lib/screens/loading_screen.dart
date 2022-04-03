@@ -26,12 +26,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         Navigator.pushReplacementNamed(context, 'home_screen');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Welcome to GymNotes!',
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-          ),
+          snackWelcomeToGymNotes,
         );
         Navigator.pushReplacementNamed(context, 'login_screen');
       }

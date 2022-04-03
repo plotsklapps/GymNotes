@@ -1,5 +1,17 @@
 import 'package:gymnotes/all_imports.dart';
 
+final SnackBar snackWelcomeToGymNotes = SnackBar(
+  content: const Text(
+    'Welcome to GymNotes!',
+    style: TextStyle(fontWeight: FontWeight.w600),
+  ),
+  duration: const Duration(seconds: 3),
+  action: SnackBarAction(
+    label: 'OK',
+    onPressed: () {},
+  ),
+);
+
 final SnackBar snackSignUpSucces = SnackBar(
   content: const Text(
     'Successfully signed up!',
@@ -207,6 +219,18 @@ final SnackBar snackEmailVerificationSent = SnackBar(
 final SnackBar snackVerifyEmailFirst = SnackBar(
   content: const Text(
     'Please verify your email first!',
+    style: TextStyle(fontWeight: FontWeight.w600),
+  ),
+  duration: const Duration(seconds: 3),
+  action: SnackBarAction(
+    label: 'OK',
+    onPressed: () {},
+  ),
+);
+
+final SnackBar snackEmailVerified = SnackBar(
+  content: const Text(
+    'Verified user. Welcome to GymNotes!',
     style: TextStyle(fontWeight: FontWeight.w600),
   ),
   duration: const Duration(seconds: 3),
