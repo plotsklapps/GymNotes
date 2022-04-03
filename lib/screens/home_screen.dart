@@ -36,6 +36,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             ListTile(
+              title: const Text('Account'),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: const Text('Current user:'),
+                    content: Text(currentUser.toString()),
+                    actions: [
+                      TextButton(
+                        child: const Text('OK'),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            ListTile(
               title: const Text('Sign out'),
               onTap: () async {
                 await FirebaseService().signOut(
