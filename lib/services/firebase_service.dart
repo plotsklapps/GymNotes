@@ -6,16 +6,12 @@ class FirebaseService {
     try {
       final UserCredential? userCredential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
-      if (kDebugMode) {
-        print('User signed up');
-      }
+      Logger().i('User signed up');
       ScaffoldMessenger.of(context).showSnackBar(
         snackSignUpSucces,
       );
       await userCredential?.user?.sendEmailVerification();
-      if (kDebugMode) {
-        print('Verification email sent');
-      }
+      Logger().i('Verification email sent');
       ScaffoldMessenger.of(context).showSnackBar(
         snackEmailVerificationSent,
       );
@@ -24,9 +20,7 @@ class FirebaseService {
       switch (e.code) {
         case 'weak-password':
           {
-            if (kDebugMode) {
-              print('Password is too weak');
-            }
+            Logger().i('Password is too weak');
             ScaffoldMessenger.of(context).showSnackBar(
               snackWeakPassword,
             );
@@ -34,9 +28,7 @@ class FirebaseService {
           }
         case 'email-already-in-use':
           {
-            if (kDebugMode) {
-              print('Email already in use');
-            }
+            Logger().i('Email already in use');
             ScaffoldMessenger.of(context).showSnackBar(
               snackEmailAlreadyInUse,
             );
@@ -44,9 +36,8 @@ class FirebaseService {
           }
         case 'operation-not-allowed':
           {
-            if (kDebugMode) {
-              print('Sign up not allowed, too many requests or server error');
-            }
+            Logger()
+                .i('Sign up not allowed, too many requests or server error');
             ScaffoldMessenger.of(context).showSnackBar(
               snackSignUpNotAllowed,
             );
@@ -54,9 +45,7 @@ class FirebaseService {
           }
         case 'invalid-email':
           {
-            if (kDebugMode) {
-              print('Invalid email, check spelling');
-            }
+            Logger().i('Invalid email, check spelling');
             ScaffoldMessenger.of(context).showSnackBar(
               snackInvalidEmail,
             );
@@ -64,9 +53,7 @@ class FirebaseService {
           }
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error signing up: $e');
-      }
+      Logger().i('Error signing up: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         snackSignUpFail,
       );
@@ -78,18 +65,14 @@ class FirebaseService {
     try {
       /*CHECK IF TEXTFIELDS ARE EMPTY*/
       if (email.isEmpty || password.isEmpty) {
-        if (kDebugMode) {
-          print('Email or password is empty');
-        }
+        Logger().i('Email or password is empty');
         ScaffoldMessenger.of(context).showSnackBar(
           snackEmptyFields,
         );
         return;
         /*CHECK IF EMAIL SPELLING IS CORRECT*/
       } else if (!email.contains('@') || email.contains(' ')) {
-        if (kDebugMode) {
-          print('Email is invalid');
-        }
+        Logger().i('Email is invalid');
         ScaffoldMessenger.of(context).showSnackBar(
           snackInvalidEmail,
         );
@@ -100,9 +83,7 @@ class FirebaseService {
             email: email, password: password);
         /*IF USER CLICKED VERIFICATION EMAIL GO TO HOMESCREEN*/
         if (firebaseAuth.currentUser!.emailVerified) {
-          if (kDebugMode) {
-            print('User is verified');
-          }
+          Logger().i('User is verified');
           ScaffoldMessenger.of(context).showSnackBar(
             snackEmailVerified,
           );
@@ -113,9 +94,7 @@ class FirebaseService {
         }
         /*IF USER DID NOT CLICK VERIFICATION EMAIL SHOW SNACK AND STAY*/
         else if (!firebaseAuth.currentUser!.emailVerified) {
-          if (kDebugMode) {
-            print('User is NOT verified');
-          }
+          Logger().i('User is NOT verified');
           ScaffoldMessenger.of(context).showSnackBar(
             snackVerifyEmailFirst,
           );
@@ -126,9 +105,7 @@ class FirebaseService {
       switch (e.code) {
         case 'invalid-email':
           {
-            if (kDebugMode) {
-              print('Invalid email, check spelling');
-            }
+            Logger().i('Invalid email, check spelling');
             ScaffoldMessenger.of(context).showSnackBar(
               snackInvalidEmail,
             );
@@ -136,9 +113,7 @@ class FirebaseService {
           }
         case 'user-disabled':
           {
-            if (kDebugMode) {
-              print('User is disabled');
-            }
+            Logger().i('User is disabled');
             ScaffoldMessenger.of(context).showSnackBar(
               snackSignUpNotAllowed,
             );
@@ -146,9 +121,7 @@ class FirebaseService {
           }
         case 'user-not-found':
           {
-            if (kDebugMode) {
-              print('No user found with this email');
-            }
+            Logger().i('No user found with this email');
             ScaffoldMessenger.of(context).showSnackBar(
               snackUserNotFound,
             );
@@ -156,9 +129,7 @@ class FirebaseService {
           }
         case 'wrong-password':
           {
-            if (kDebugMode) {
-              print('Wrong password! Check spelling!');
-            }
+            Logger().i('Wrong password! Check spelling!');
             ScaffoldMessenger.of(context).showSnackBar(
               snackWrongPassword,
             );
@@ -166,9 +137,7 @@ class FirebaseService {
           }
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error signing up: $e');
-      }
+      Logger().i('Error signing in: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         snackSignInFail,
       );
@@ -179,17 +148,13 @@ class FirebaseService {
   Future<void> signOut(context) async {
     try {
       await firebaseAuth.signOut();
-      if (kDebugMode) {
-        print('User signed out');
-      }
+      Logger().i('User signed out');
       ScaffoldMessenger.of(context).showSnackBar(
         snackSignOutSucces,
       );
       Navigator.of(context).pushReplacementNamed('login_screen');
     } catch (e) {
-      if (kDebugMode) {
-        print('Error signing out: $e');
-      }
+      Logger().i('Error signing out: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         snackSignOutFail,
       );
@@ -200,20 +165,16 @@ class FirebaseService {
   Future<void> resetPassword(context, String email) async {
     try {
       await firebaseAuth.sendPasswordResetEmail(email: email);
-      if (kDebugMode) {
-        print('Password reset email sent');
-      }
+      Logger().i('Password reset email sent');
       ScaffoldMessenger.of(context).showSnackBar(
         snackResetPasswordSucces,
       );
       Navigator.of(context).pushReplacementNamed('login_screen');
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
-        case 'auth/invalid-email':
+        case 'invalid-email':
           {
-            if (kDebugMode) {
-              print('Invalid email, check spelling');
-            }
+            Logger().i('Invalid email, check spelling');
             ScaffoldMessenger.of(context).showSnackBar(
               snackInvalidEmail,
             );
@@ -221,9 +182,7 @@ class FirebaseService {
           }
         case 'user-not-found':
           {
-            if (kDebugMode) {
-              print('No user found with this email');
-            }
+            Logger().i('No user found with this email');
             ScaffoldMessenger.of(context).showSnackBar(
               snackUserNotFound,
             );
@@ -231,9 +190,7 @@ class FirebaseService {
           }
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error signing up: $e');
-      }
+      Logger().i('Error resetting password: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         snackResetPasswordFail,
       );

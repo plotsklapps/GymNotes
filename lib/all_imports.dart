@@ -6,9 +6,11 @@ export 'package:gymnotes/firebase_options.dart';
 export 'package:firebase_auth/firebase_auth.dart';
 export 'package:gymnotes/constants/firebase_constants.dart';
 export 'package:gymnotes/services/firebase_service.dart';
+export 'package:gymnotes/services/firebase_exceptions.dart';
 
 export 'package:google_fonts/google_fonts.dart';
 export 'package:flex_color_scheme/flex_color_scheme.dart';
+export 'package:logger/logger.dart';
 
 export 'package:gymnotes/themes/flex_color_scheme.dart';
 export 'package:gymnotes/themes/flex_colors.dart';
