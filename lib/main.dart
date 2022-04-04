@@ -3,9 +3,7 @@ import 'package:gymnotes/all_imports.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  if (kDebugMode) {
-    print('Firebase initialized');
-  }
+  Logger().i('Firebase initialized');
   runApp(const MainEntry());
 }
 

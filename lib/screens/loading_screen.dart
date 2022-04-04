@@ -13,13 +13,14 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   void initState() {
+    final userName = currentUser?.displayName;
     timer = Timer(const Duration(seconds: 3), () {
       if (currentUser != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+          SnackBar(
             content: Text(
-              'Welcome back!',
-              style: TextStyle(fontWeight: FontWeight.w600),
+              'Welcome back, $userName!',
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
           ),
         );

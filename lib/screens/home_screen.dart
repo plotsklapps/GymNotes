@@ -68,10 +68,10 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text('Welcome to Gymnotes!'),
+            const Text('Welcome to Gymnotes!'),
             ElevatedButton(
               onPressed: () {},
-              child: Text('Start New Workout'),
+              child: const Text('Start New Workout'),
             ),
           ],
         ),
