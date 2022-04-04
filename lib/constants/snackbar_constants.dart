@@ -253,9 +253,9 @@ final SnackBar snackEmailVerified = SnackBar(
 );
 
 final SnackBar snackWelcomeBack = SnackBar(
-  content: Text(
-    'Welcome back, $currentUser!',
-    style: const TextStyle(fontWeight: FontWeight.w600),
+  content: const Text(
+    'Welcome back!',
+    style: TextStyle(fontWeight: FontWeight.w600),
   ),
   duration: const Duration(seconds: 3),
   action: SnackBarAction(

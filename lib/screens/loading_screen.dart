@@ -13,16 +13,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   void initState() {
-    final userName = currentUser?.displayName;
     timer = Timer(const Duration(seconds: 3), () {
       if (currentUser != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Welcome back, $userName!',
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
-          ),
+          snackWelcomeBack,
         );
         Navigator.pushReplacementNamed(context, 'home_screen');
       } else {
@@ -44,17 +38,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'GymNotes',
                   style: TextStyle(
                     fontSize: 48.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 24.0),
-                CircularProgressIndicator(
+                const SizedBox(height: 24.0),
+                const CircularProgressIndicator(
                   strokeWidth: 12.0,
+                ),
+                const SizedBox(height: 24.0),
+                Image.asset(
+                  'assets/images/plotsklappsLogo.png',
+                  scale: 5.0,
                 ),
               ],
             ),

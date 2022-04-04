@@ -25,6 +25,8 @@ class MainEntry extends StatelessWidget {
           'login_screen': (context) => const LoginScreen(),
           'password_screen': (context) => const PasswordScreen(),
           'home_screen': (context) => const HomeScreen(),
+          'account_screen': (context) => const AccountScreen(),
+          'musclegroup_screen': (context) => const MuscleGroupScreen(),
         });
   }
 }

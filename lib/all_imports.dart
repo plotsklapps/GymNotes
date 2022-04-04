@@ -23,3 +23,5 @@ export 'package:gymnotes/screens/register_screen.dart';
 export 'package:gymnotes/screens/login_screen.dart';
 export 'package:gymnotes/screens/password_screen.dart';
 export 'package:gymnotes/screens/home_screen.dart';
+export 'package:gymnotes/screens/account_screen.dart';
+export 'package:gymnotes/screens/musclegroup_screen.dart';

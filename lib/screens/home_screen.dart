@@ -38,18 +38,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: const Text('Account'),
               onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: const Text('Current user:'),
-                    content: Text(currentUser.toString()),
-                    actions: [
-                      TextButton(
-                        child: const Text('OK'),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                    ],
-                  ),
+                Navigator.pushNamed(
+                  context,
+                  'account_screen',
                 );
               },
             ),
@@ -70,7 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             const Text('Welcome to Gymnotes!'),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  'musclegroup_screen',
+                );
+              },
               child: const Text('Start New Workout'),
             ),
           ],
