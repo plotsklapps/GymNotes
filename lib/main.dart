@@ -4,7 +4,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   Logger().i('Firebase initialized');
-  runApp(const MainEntry());
+  runApp(
+    const ProviderScope(
+      child: MainEntry(),
+    ),
+  );
 }
 
 class MainEntry extends StatelessWidget {

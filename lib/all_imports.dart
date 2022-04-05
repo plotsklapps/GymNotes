@@ -1,6 +1,8 @@
 export 'package:flutter/material.dart';
 export 'package:flutter/foundation.dart';
 
+export 'package:flutter_riverpod/flutter_riverpod.dart';
+
 export 'package:firebase_core/firebase_core.dart';
 export 'package:gymnotes/firebase_options.dart';
 export 'package:firebase_auth/firebase_auth.dart';
