@@ -1,15 +1,15 @@
 import 'package:gymnotes/all_imports.dart';
 
-class MuscleGroupScreen extends ConsumerStatefulWidget {
+class MuscleGroupScreen extends StatefulWidget {
   const MuscleGroupScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  ConsumerState createState() => _MuscleGroupScreenState();
+  State createState() => _MuscleGroupScreenState();
 }
 
-class _MuscleGroupScreenState extends ConsumerState<MuscleGroupScreen> {
+class _MuscleGroupScreenState extends State<MuscleGroupScreen> {
   List<String> muscleGroupList = [
     'Chest',
     'Back',
@@ -33,60 +33,38 @@ class _MuscleGroupScreenState extends ConsumerState<MuscleGroupScreen> {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: muscleGroupList
-            .map((muscleGroup) => Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      16.0,
-                      4.0,
-                      16.0,
-                      4.0,
-                    ),
-                    child: Card(
-                      child: InkWell(
-                        onTap: () {},
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                      0.0,
-                                      12.0,
-                                      12.0,
-                                      0.0,
-                                    ),
-                                    child: Text(
-                                      muscleGroup,
-                                      style: const TextStyle(
-                                        fontSize: 28.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    )),
-                              ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: muscleGroupList
+              .map((muscleGroup) => Card(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ExerciseScreen(muscleGroup: muscleGroup)),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Center(
+                          child: Text(
+                            muscleGroup,
+                            style: const TextStyle(
+                              fontSize: 28.0,
+                              fontWeight: FontWeight.w600,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 4.0),
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 40.0,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ))
-            .toList(),
+                  ))
+              .toList(),
+        ),
       ),
     );
   }

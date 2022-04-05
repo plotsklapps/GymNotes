@@ -19,6 +19,7 @@ export 'package:gymnotes/themes/flex_color_scheme.dart';
 export 'package:gymnotes/themes/flex_colors.dart';
 
 export 'package:gymnotes/constants/snackbar_constants.dart';
+export 'package:gymnotes/constants/lists.dart';
 
 export 'package:gymnotes/screens/loading_screen.dart';
 export 'package:gymnotes/screens/register_screen.dart';
@@ -27,3 +28,5 @@ export 'package:gymnotes/screens/password_screen.dart';
 export 'package:gymnotes/screens/home_screen.dart';
 export 'package:gymnotes/screens/account_screen.dart';
 export 'package:gymnotes/screens/musclegroup_screen.dart';
+export 'package:gymnotes/screens/exercise_screen.dart';
+export 'package:gymnotes/screens/weight_reps_screen.dart';
