@@ -46,12 +46,7 @@ class _MuscleGroupScreenState extends ConsumerState<MuscleGroupScreen> {
                     ),
                     child: Card(
                       child: InkWell(
-                        onTap: () {
-                          if (muscleGroup == 'Chest') {
-                            print(muscleGroup);
-                          }
-                          //TODO: Continue with RIVERPOD here!
-                        },
+                        onTap: () {},
                         child: Column(
                           children: [
                             Row(
