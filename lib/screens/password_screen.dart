@@ -79,7 +79,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 onPressed: () async {
                   await FirebaseService().resetPassword(
                     context,
-                    _emailCtrl.text,
+                    _emailCtrl.text.trim(),
                   );
                 },
               ),

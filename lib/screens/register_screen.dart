@@ -121,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   } else {
                     await FirebaseService().signUp(
                       context,
-                      _emailCtrl.text,
+                      _emailCtrl.text.trim(),
                       _password1Ctrl.text,
                     );
                   }

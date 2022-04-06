@@ -1,9 +1,11 @@
 import 'package:gymnotes/all_imports.dart';
 
 class WeightRepsScreen extends StatefulWidget {
-  const WeightRepsScreen(
-      {Key? key, required this.muscleGroup, required this.exercise})
-      : super(key: key);
+  const WeightRepsScreen({
+    Key? key,
+    required this.muscleGroup,
+    required this.exercise,
+  }) : super(key: key);
 
   final String muscleGroup;
   final String exercise;

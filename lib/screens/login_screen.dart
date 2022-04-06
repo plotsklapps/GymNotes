@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () async {
                   await FirebaseService().signIn(
                     context,
-                    _emailCtrl.text,
+                    _emailCtrl.text.trim(),
                     _passwordCtrl.text,
                   );
                 },

@@ -17,20 +17,21 @@ class MainEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'GymNotes',
-        theme: themeLight,
-        darkTheme: themeDark,
-        themeMode: ThemeMode.system,
-        home: const LoadingScreen(),
-        routes: {
-          'loading_screen': (context) => const LoadingScreen(),
-          'register_screen': (context) => const RegisterScreen(),
-          'login_screen': (context) => const LoginScreen(),
-          'password_screen': (context) => const PasswordScreen(),
-          'home_screen': (context) => const HomeScreen(),
-          'account_screen': (context) => const AccountScreen(),
-          'musclegroup_screen': (context) => const MuscleGroupScreen(),
-        });
+      debugShowCheckedModeBanner: false,
+      title: 'GymNotes',
+      theme: themeLight,
+      darkTheme: themeDark,
+      themeMode: ThemeMode.system,
+      home: const LoadingScreen(),
+      routes: {
+        'loading_screen': (context) => const LoadingScreen(),
+        'register_screen': (context) => const RegisterScreen(),
+        'login_screen': (context) => const LoginScreen(),
+        'password_screen': (context) => const PasswordScreen(),
+        'home_screen': (context) => const HomeScreen(),
+        'account_screen': (context) => const AccountScreen(),
+        'musclegroup_screen': (context) => const MuscleGroupScreen(),
+      },
+    );
   }
 }

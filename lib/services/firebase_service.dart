@@ -82,7 +82,9 @@ class FirebaseService {
       } else {
         /*FIREBASE SIGN IN METHOD*/
         await firebaseAuth.signInWithEmailAndPassword(
-            email: email, password: password);
+          email: email,
+          password: password,
+        );
         /*IF USER CLICKED VERIFICATION EMAIL GO TO HOMESCREEN*/
         if (firebaseAuth.currentUser!.emailVerified) {
           Logger().i('User is verified');
