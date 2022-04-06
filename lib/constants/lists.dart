@@ -1,3 +1,15 @@
+/*MUSCLEGROUP LIST*/
+List<String> muscleGroupList = [
+  'Chest',
+  'Back',
+  'Legs',
+  'Shoulders',
+  'Biceps',
+  'Triceps',
+  'Abs',
+];
+
+/*EXERCISES LISTS*/
 List<String> chestExercises = [
   'Bench Press',
   'Fly',
@@ -32,4 +44,21 @@ List<String> absExercises = [
   'Crunch',
   'Sit Up',
   'Hanging Knee Raise',
+];
+
+/*POSITIONS LIST*/
+List<String> positionsList = [
+  'Flat',
+  'Incline',
+  'Decline',
+  'Military',
+  'Standing',
+];
+
+/*POSITIONS LIST*/
+List<String> weaponsList = [
+  'Dumbell',
+  'Barbell',
+  'EZ-bar',
+  'Kettlebell',
 ];

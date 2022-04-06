@@ -1,52 +1,31 @@
 import 'package:gymnotes/all_imports.dart';
 
-import 'position_screen.dart';
-
-class ExerciseScreen extends StatefulWidget {
-  const ExerciseScreen({
+class PositionScreen extends StatefulWidget {
+  const PositionScreen({
     Key? key,
     required this.muscleGroup,
+    required this.exercise,
   }) : super(key: key);
 
   final String muscleGroup;
+  final String exercise;
 
   @override
-  State<ExerciseScreen> createState() => _ExerciseScreenState();
+  State<PositionScreen> createState() => _PositionScreenState();
 }
 
-class _ExerciseScreenState extends State<ExerciseScreen> {
-  late final TextEditingController exerciseCtrl;
-
-  List<String> getExercisesList() {
-    switch (widget.muscleGroup) {
-      case 'Chest':
-        return chestExercises;
-      case 'Back':
-        return backExercises;
-      case 'Legs':
-        return legExercises;
-      case 'Shoulders':
-        return shoulderExercises;
-      case 'Biceps':
-        return bicepsExercises;
-      case 'Triceps':
-        return tricepsExercises;
-      case 'Abs':
-        return absExercises;
-      default:
-        return [];
-    }
-  }
+class _PositionScreenState extends State<PositionScreen> {
+  late final TextEditingController positionCtrl;
 
   @override
   void initState() {
-    exerciseCtrl = TextEditingController();
+    positionCtrl = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    exerciseCtrl.dispose();
+    positionCtrl.dispose();
     super.dispose();
   }
 
@@ -54,7 +33,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Exercises'),
+        title: const Text('Position'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -66,7 +45,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   return AlertDialog(
                     title: const Text('Add Exercise'),
                     content: TextField(
-                      controller: exerciseCtrl,
+                      controller: positionCtrl,
                       keyboardType: TextInputType.text,
                       textCapitalization: TextCapitalization.words,
                       decoration: const InputDecoration(
@@ -77,16 +56,16 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                       TextButton(
                         child: const Text('Cancel'),
                         onPressed: () {
-                          exerciseCtrl.clear();
+                          positionCtrl.clear();
                           Navigator.of(context).pop();
                         },
                       ),
                       TextButton(
                         child: const Text('Add'),
                         onPressed: () {
-                          getExercisesList().add(exerciseCtrl.text);
+                          positionsList.add(positionCtrl.text);
                           setState(() {});
-                          exerciseCtrl.clear();
+                          positionCtrl.clear();
                           Navigator.of(context).pop();
                         },
                       ),
@@ -107,7 +86,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 Row(
                   children: const [
                     Text(
-                      'Pick an exercise:',
+                      'Choose your position:',
                       style: TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
@@ -119,17 +98,18 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: getExercisesList()
+                  children: positionsList
                       .map(
-                        (exercise) => Card(
+                        (position) => Card(
                           child: InkWell(
                             onTap: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => PositionScreen(
+                                  builder: (context) => WeaponScreen(
                                     muscleGroup: widget.muscleGroup,
-                                    exercise: exercise,
+                                    exercise: widget.exercise,
+                                    position: position,
                                   ),
                                 ),
                               );
@@ -138,7 +118,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                               padding: const EdgeInsets.all(16.0),
                               child: Center(
                                 child: Text(
-                                  exercise,
+                                  position,
                                   style: const TextStyle(
                                     fontSize: 28.0,
                                     fontWeight: FontWeight.w600,

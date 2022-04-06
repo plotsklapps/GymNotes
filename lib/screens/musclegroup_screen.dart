@@ -12,16 +12,6 @@ class MuscleGroupScreen extends StatefulWidget {
 class _MuscleGroupScreenState extends State<MuscleGroupScreen> {
   late final TextEditingController muscleGroupCtrl;
 
-  List<String> muscleGroupList = [
-    'Chest',
-    'Back',
-    'Legs',
-    'Shoulders',
-    'Biceps',
-    'Triceps',
-    'Abs',
-  ];
-
   @override
   void initState() {
     muscleGroupCtrl = TextEditingController();
@@ -87,37 +77,53 @@ class _MuscleGroupScreenState extends State<MuscleGroupScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: muscleGroupList
-                  .map(
-                    (muscleGroup) => Card(
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ExerciseScreen(muscleGroup: muscleGroup),
-                            ),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Center(
-                            child: Text(
-                              muscleGroup,
-                              style: const TextStyle(
-                                fontSize: 28.0,
-                                fontWeight: FontWeight.w600,
+              children: [
+                Row(
+                  children: const [
+                    Text(
+                      'Choose a musclegroup:',
+                      style: TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16.0),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: muscleGroupList
+                      .map(
+                        (muscleGroup) => Card(
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      ExerciseScreen(muscleGroup: muscleGroup),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Center(
+                                child: Text(
+                                  muscleGroup,
+                                  style: const TextStyle(
+                                    fontSize: 28.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  )
-                  .toList(),
+                      )
+                      .toList(),
+                ),
+              ],
             ),
           ),
         ),
