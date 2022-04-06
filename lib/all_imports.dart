@@ -31,4 +31,4 @@ export 'package:gymnotes/screens/musclegroup_screen.dart';
 export 'package:gymnotes/screens/exercise_screen.dart';
 export 'package:gymnotes/screens/position_screen.dart';
 export 'package:gymnotes/screens/weapon_screen.dart';
-export 'package:gymnotes/screens/weight_reps_screen.dart';
+export 'package:gymnotes/screens/workout_screen.dart';
