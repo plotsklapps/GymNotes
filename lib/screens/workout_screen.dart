@@ -50,7 +50,7 @@ class _WeightRepsScreenState extends State<WeightRepsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                '${widget.exercise}\n${widget.position}\n${widget.weapon}}',
+                '${widget.exercise}\n${widget.position}\n${widget.weapon}',
               ),
               Text('Weight: ${_weightCtrl.text}\nReps: ${_repsCtrl.text}'),
             ],
