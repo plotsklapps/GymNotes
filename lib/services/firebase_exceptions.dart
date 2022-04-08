@@ -15,7 +15,6 @@ class WrongPasswordException implements Exception {}
 class UserNotFoundException implements Exception {}
 
 /*GENERIC EXCEPTIONS*/
-
 class GenericException implements Exception {}
 
 class UserNotLoggedInException implements Exception {}

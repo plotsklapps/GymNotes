@@ -13,17 +13,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   void initState() {
-    timer = Timer(const Duration(seconds: 3), () {
+    timer = Timer(const Duration(seconds: 3), () async {
       if (currentUser != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          snackWelcomeBack,
+        await showCustomSnackBar(context, 'Welcome back!').then(
+          (_) => Navigator.of(context).pushReplacementNamed('home_screen'),
         );
-        Navigator.pushReplacementNamed(context, 'home_screen');
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          snackWelcomeToGymNotes,
+        await showCustomSnackBar(context, 'Welcome to GymNotes!').then(
+          (_) => Navigator.pushReplacementNamed(context, 'login_screen'),
         );
-        Navigator.pushReplacementNamed(context, 'login_screen');
       }
     });
     super.initState();

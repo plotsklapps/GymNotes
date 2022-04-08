@@ -7,56 +7,51 @@ class FirebaseService {
       final UserCredential? userCredential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
       Logger().i('User signed up');
-      ScaffoldMessenger.of(context).showSnackBar(
-        snackSignUpSucces,
-      );
+      await showCustomSnackBar(context, 'Sign up successful!');
       /*SEND EMAIL VERIFICATION AND GO TO LOGINSCREEN*/
       await userCredential?.user?.sendEmailVerification();
       Logger().i('Verification email sent');
-      ScaffoldMessenger.of(context).showSnackBar(
-        snackEmailVerificationSent,
-      );
+      await showCustomSnackBar(context, 'Verification email sent!');
       Navigator.of(context).pushReplacementNamed('login_screen');
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'weak-password':
           {
             Logger().i('Password is too weak');
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackWeakPassword,
+            await showCustomSnackBar(
+              context,
+              'Password should be at least 6 characters!',
             );
             throw WeakPasswordException();
           }
         case 'email-already-in-use':
           {
             Logger().i('Email already in use');
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackEmailAlreadyInUse,
-            );
+            await showCustomSnackBar(context, 'Email is already in use!');
             throw EmailAlreadyInUseException();
           }
         case 'operation-not-allowed':
           {
             Logger()
                 .i('Sign up not allowed, too many requests or server error');
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackSignUpNotAllowed,
+            await showCustomSnackBar(
+              context,
+              'Sign up not allowed! Too many requests or server error!',
             );
             throw OperationNotAllowedException();
           }
         case 'invalid-email':
           {
             Logger().i('Invalid email, check spelling');
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackInvalidEmail,
-            );
+            await showCustomSnackBar(context, 'Invalid email, check spelling!');
             throw InvalidEmailException();
           }
       }
     } catch (e) {
       Logger().i('Error signing up: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        snackSignUpFail,
+      await showCustomSnackBar(
+        context,
+        'Something went wrong, please try again later!',
       );
       throw GenericException();
     }
@@ -68,15 +63,14 @@ class FirebaseService {
       /*CHECK IF TEXTFIELDS ARE EMPTY*/
       if (email.isEmpty || password.isEmpty) {
         Logger().i('Email or password is empty');
-        ScaffoldMessenger.of(context).showSnackBar(
-          snackEmptyFields,
-        );
+        await showCustomSnackBar(context, 'Please fill in all fields!');
         return;
         /*CHECK IF EMAIL SPELLING IS CORRECT*/
       } else if (!email.contains('@') || email.contains(' ')) {
         Logger().i('Email is invalid');
-        ScaffoldMessenger.of(context).showSnackBar(
-          snackInvalidEmail,
+        await showCustomSnackBar(
+          context,
+          'Invalid email! Please check spelling!',
         );
         return;
       } else {
@@ -88,8 +82,9 @@ class FirebaseService {
         /*IF USER CLICKED VERIFICATION EMAIL GO TO HOMESCREEN*/
         if (firebaseAuth.currentUser!.emailVerified) {
           Logger().i('User is verified');
-          ScaffoldMessenger.of(context).showSnackBar(
-            snackEmailVerified,
+          await showCustomSnackBar(
+            context,
+            'Verified user, welcome to GymNotes!',
           );
           Navigator.pushReplacementNamed(
             context,
@@ -99,8 +94,9 @@ class FirebaseService {
         /*IF USER DID NOT CLICK VERIFICATION EMAIL SHOW SNACK AND STAY*/
         else if (!firebaseAuth.currentUser!.emailVerified) {
           Logger().i('User is NOT verified');
-          ScaffoldMessenger.of(context).showSnackBar(
-            snackVerifyEmailFirst,
+          await showCustomSnackBar(
+            context,
+            'Please verify your email address first!',
           );
         }
       }
@@ -110,40 +106,39 @@ class FirebaseService {
         case 'invalid-email':
           {
             Logger().i('Invalid email, check spelling');
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackInvalidEmail,
+            await showCustomSnackBar(
+              context,
+              'Invalid email! Please check spelling!',
             );
             break;
           }
         case 'user-disabled':
           {
             Logger().i('User is disabled');
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackSignUpNotAllowed,
-            );
+            await showCustomSnackBar(context, 'User disabled from siging up!');
             break;
           }
         case 'user-not-found':
           {
             Logger().i('No user found with this email');
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackUserNotFound,
-            );
+            await showCustomSnackBar(context, 'No user found with this email!');
             break;
           }
         case 'wrong-password':
           {
             Logger().i('Wrong password! Check spelling!');
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackWrongPassword,
+            await showCustomSnackBar(
+              context,
+              'Wrong password! Please check spelling!',
             );
             break;
           }
       }
     } catch (e) {
       Logger().i('Error signing in: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        snackSignInFail,
+      await showCustomSnackBar(
+        context,
+        'Sign in failed! Please try again later!',
       );
     }
   }
@@ -153,14 +148,13 @@ class FirebaseService {
     try {
       await firebaseAuth.signOut();
       Logger().i('User signed out');
-      ScaffoldMessenger.of(context).showSnackBar(
-        snackSignOutSucces,
-      );
+      await showCustomSnackBar(context, 'Successfully signed out!');
       Navigator.of(context).pushReplacementNamed('login_screen');
     } catch (e) {
       Logger().i('Error signing out: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        snackSignOutFail,
+      await showCustomSnackBar(
+        context,
+        'Sign out failed! Please try again later!',
       );
     }
   }
@@ -170,33 +164,34 @@ class FirebaseService {
     try {
       await firebaseAuth.sendPasswordResetEmail(email: email);
       Logger().i('Password reset email sent');
-      ScaffoldMessenger.of(context).showSnackBar(
-        snackResetPasswordSucces,
-      );
+      await showCustomSnackBar(context, 'Password reset email has been sent!');
       Navigator.of(context).pushReplacementNamed('login_screen');
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case 'invalid-email':
           {
             Logger().i('Invalid email, check spelling');
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackInvalidEmail,
+            await showCustomSnackBar(
+              context,
+              'Invalid email! Please check spelling!',
             );
             break;
           }
         case 'user-not-found':
           {
             Logger().i('No user found with this email');
-            ScaffoldMessenger.of(context).showSnackBar(
-              snackUserNotFound,
+            await showCustomSnackBar(
+              context,
+              'No user found with this email!',
             );
             break;
           }
       }
     } catch (e) {
       Logger().i('Error resetting password: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        snackResetPasswordFail,
+      await showCustomSnackBar(
+        context,
+        'An error occurred! Please try again later!',
       );
     }
   }

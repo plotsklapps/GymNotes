@@ -104,19 +104,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: const Text('REGISTER'),
                 onPressed: () async {
                   if (_password1Ctrl.text != _password2Ctrl.text) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(snackPasswordsDontMatch);
+                    await showCustomSnackBar(
+                        context, 'Passwords don\'t match!');
                     return;
                   } else if (_emailCtrl.text.isEmpty ||
                       _password1Ctrl.text.isEmpty ||
                       _password2Ctrl.text.isEmpty) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(snackEmptyFields);
+                    await showCustomSnackBar(
+                        context, 'Fields can\'t be empty!');
                     return;
                   } else if (!_emailCtrl.text.contains('@') ||
                       _emailCtrl.text.contains(' ')) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(snackInvalidEmail);
+                    await showCustomSnackBar(
+                        context, 'Invalid email! Please check spelling!');
                     return;
                   } else {
                     await FirebaseService().signUp(
