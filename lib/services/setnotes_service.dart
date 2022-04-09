@@ -140,6 +140,8 @@ class SetNotesService {
     const weaponText = '';
     const weightAmount = 0;
     const repsAmount = 0;
+
+    /*CREATE SETNOTEID TO USE AFTER*/
     final setNoteId = await db.insert(setNotesTable, {
       userIdColumn: owner.id,
       musclegroupColumn: muscleGroupText,
@@ -150,6 +152,7 @@ class SetNotesService {
       repsColumn: repsAmount,
       isSyncedColumn: 1,
     });
+    /*CREATE SETNOTE WITH SETNOTEID*/
     final setNote = DatabaseSetNote(
       id: setNoteId,
       userId: owner.id,
@@ -252,6 +255,7 @@ class DatabaseUser {
     return 'Person, ID = $id, email = $email';
   }
 
+  /*CHECK IF USER IS ACTUAL OWNER OF DATABASE*/
   @override
   bool operator ==(covariant DatabaseUser other) {
     return id == other.id;
@@ -273,6 +277,7 @@ class DatabaseSetNote {
   final int reps;
   final bool isSynced;
 
+  /*CONSTRUCTOR FOR AN ACTUAL SETNOTE INSTANCE */
   const DatabaseSetNote({
     required this.id,
     required this.userId,
