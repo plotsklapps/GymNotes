@@ -37,6 +37,16 @@ const createSetNoteTable = '''
 class SetNotesService {
   Database? _db;
 
+  List<DatabaseSetNote> _setNotes = [];
+
+  final _setNotesStreamController = StreamController<List<DatabaseSetNotes>>.broadcast();
+
+  Future<void> _cacheSetNotes() async {
+    final allSetNotes = await getAllSetNotes();
+    _setNotes = allSetNotes.toList();
+    _setNotesStreamController.add(_setNotes);
+  }
+
   Database _getDatabaseOrThrow() {
     final db = _db;
     if (db == null) {
@@ -63,6 +73,9 @@ class SetNotesService {
 
       /*CREATE SETNOTETABLE IF NOT EXISTS*/
       await db.execute(createSetNoteTable);
+
+      /*CALL FUNCTION _CACHESETNOTES() TO FILL LIST + STREAMCONTROLLER*/
+      await _cacheSetNotes();
     } on MissingPlatformDirectoryException {
       throw UnableToGetDocumentsDirectoryException();
     } catch (e) {
@@ -77,6 +90,18 @@ class SetNotesService {
     } else {
       await db.close();
       _db = null;
+    }
+  }
+
+  Future<DatabaseUser> getOrCreateDatabaseUser({required String email}) async {
+    try {
+      final user = await getDatabaseUser(email: email);
+      return user;
+    } on UserNotFoundException {
+      final createdUser = await createDatabaseUser(email: email);
+      return createdUser;
+    } catch(e) {
+      rethrow;
     }
   }
 
@@ -164,6 +189,10 @@ class SetNotesService {
       reps: repsAmount,
       isSynced: true,
     );
+
+    _setNotes.add(setNote);
+    _setNotesStreamController.add(_setNotes);
+
     return setNote;
   }
 
@@ -185,7 +214,11 @@ class SetNotesService {
     if (notes.isEmpty) {
       throw DatabaseSetNoteDoesNotExistException();
     } else {
-      return DatabaseSetNote.fromRow(notes.first);
+      final setNote = DatabaseSetNote.fromRow(notes.first);
+      _setNotes.removeWhere((setNote) => setNote.id == id);
+      _setNotes.add(setNote);
+      _setNotesStreamController.add(_setNotes);
+      return setNote;
     }
   }
 
@@ -194,7 +227,9 @@ class SetNotesService {
     required String text,
   }) async {
     final db = _getDatabaseOrThrow();
+    /*MAKE SURE SETNOTE ACTUALLY EXISTS*/
     await getSetNote(id: setNote.id);
+    /*UPDATE DATABASE (DB)*/
     final updatesCount = await db.update(
       setNotesTable,
       {
@@ -212,7 +247,11 @@ class SetNotesService {
     if (updatesCount == 0) {
       throw CouldNotUpdateSetNoteException();
     } else {
-      return await getSetNote(id: setNote.id);
+      final updatedSetNote = await getSetNote(id: setNote.id);
+      _setNotes.removeWhere((setNote) => setNote.id == updatedSetNote.id);
+      _setNotes.add(updatedSetNote);
+      _setNotesStreamController.add(_setNotes);
+      return updatedSetNote;
     }
   }
 
@@ -225,6 +264,9 @@ class SetNotesService {
     );
     if (deletedCount == 0) {
       throw CouldNotDeleteSetNoteException();
+    } else {
+      _setNotes.removeWhere((setNote) => setNote.id == id);
+      _setNotesStreamController.add(_setNotes);
     }
   }
 
@@ -233,6 +275,8 @@ class SetNotesService {
     final deletedCount = await db.delete(
       setNotesTable,
     );
+    _setNotes = [];
+    _setNotesStreamController.add(_setNotes);
     return deletedCount;
   }
 }
