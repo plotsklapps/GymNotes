@@ -8,6 +8,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+String get userEmail => FirebaseService.currentUser!.email!;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

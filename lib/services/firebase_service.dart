@@ -196,3 +196,11 @@ class FirebaseService {
     }
   }
 }
+
+class FirebaseUser {
+  final String? email;
+  final bool isEmailVerified;
+  const FirebaseUser({required this.email, required this.isEmailVerified,});
+
+  factory FirebaseUser.fromFirebase(User user) => FirebaseUser(email: user.email,isEmailVerified: user.emailVerified);
+}
