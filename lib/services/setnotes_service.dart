@@ -39,7 +39,8 @@ class SetNotesService {
 
   List<DatabaseSetNote> _setNotes = [];
 
-  final _setNotesStreamController = StreamController<List<DatabaseSetNotes>>.broadcast();
+  final _setNotesStreamController =
+      StreamController<List<DatabaseSetNote>>.broadcast();
 
   Future<void> _cacheSetNotes() async {
     final allSetNotes = await getAllSetNotes();
@@ -79,7 +80,9 @@ class SetNotesService {
     } on MissingPlatformDirectoryException {
       throw UnableToGetDocumentsDirectoryException();
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -100,7 +103,7 @@ class SetNotesService {
     } on UserNotFoundException {
       final createdUser = await createDatabaseUser(email: email);
       return createdUser;
-    } catch(e) {
+    } catch (e) {
       rethrow;
     }
   }

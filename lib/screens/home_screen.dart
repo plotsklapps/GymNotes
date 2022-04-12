@@ -1,4 +1,5 @@
 import 'package:gymnotes/all_imports.dart';
+import 'package:gymnotes/services/setnotes_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,8 +9,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String get userEmail => currentUser!.email!;
 
-String get userEmail => FirebaseService.currentUser!.email!;
+  @override
+  void initState() {
+    SetNotesService().openDatabaseSetNotes();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    SetNotesService().closeDatabaseSetNotes();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
