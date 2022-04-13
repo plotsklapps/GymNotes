@@ -39,8 +39,15 @@ class SetNotesService {
 
   List<DatabaseSetNote> _setNotes = [];
 
+  static final SetNotesService _shared = SetNotesService._sharedInstance();
+  SetNotesService._sharedInstance();
+  factory SetNotesService() => _shared;
+
   final _setNotesStreamController =
       StreamController<List<DatabaseSetNote>>.broadcast();
+
+  Stream<List<DatabaseSetNote>> get allSetNotes =>
+      _setNotesStreamController.stream;
 
   Future<void> _cacheSetNotes() async {
     final allSetNotes = await getAllSetNotes();
@@ -86,6 +93,16 @@ class SetNotesService {
     }
   }
 
+  Future<void> ensureDatabaseIsOpen() async {
+    try {
+      await openDatabaseSetNotes();
+    } on DatabaseAlreadyOpenException {
+      if (kDebugMode) {
+        print('Database is already open');
+      }
+    }
+  }
+
   Future<void> closeDatabaseSetNotes() async {
     final db = _db;
     if (db == null) {
@@ -109,6 +126,7 @@ class SetNotesService {
   }
 
   Future<DatabaseUser> getDatabaseUser({required String email}) async {
+    await ensureDatabaseIsOpen();
     final db = _getDatabaseOrThrow();
     final results = await db.query(
       userTable,
@@ -124,6 +142,7 @@ class SetNotesService {
   }
 
   Future<DatabaseUser> createDatabaseUser({required String email}) async {
+    await ensureDatabaseIsOpen();
     final db = _getDatabaseOrThrow();
     final results = await db.query(
       userTable,
@@ -145,6 +164,7 @@ class SetNotesService {
   }
 
   Future<void> deleteDatabaseUser({required String email}) async {
+    await ensureDatabaseIsOpen();
     final db = _getDatabaseOrThrow();
     final deletedCount = await db.delete(
       userTable,
@@ -157,6 +177,7 @@ class SetNotesService {
   }
 
   Future<DatabaseSetNote> createSetNote({required DatabaseUser owner}) async {
+    await ensureDatabaseIsOpen();
     final db = _getDatabaseOrThrow();
     final dbUser = await getDatabaseUser(email: owner.email);
     if (dbUser != owner) {
@@ -200,6 +221,7 @@ class SetNotesService {
   }
 
   Future<Iterable<DatabaseSetNote>> getAllSetNotes() async {
+    await ensureDatabaseIsOpen();
     final db = _getDatabaseOrThrow();
     final notes = await db.query(setNotesTable);
 
@@ -207,6 +229,7 @@ class SetNotesService {
   }
 
   Future<DatabaseSetNote> getSetNote({required int id}) async {
+    await ensureDatabaseIsOpen();
     final db = _getDatabaseOrThrow();
     final notes = await db.query(
       setNotesTable,
@@ -229,6 +252,7 @@ class SetNotesService {
     required DatabaseSetNote setNote,
     required String text,
   }) async {
+    await ensureDatabaseIsOpen();
     final db = _getDatabaseOrThrow();
     /*MAKE SURE SETNOTE ACTUALLY EXISTS*/
     await getSetNote(id: setNote.id);
@@ -259,6 +283,7 @@ class SetNotesService {
   }
 
   Future<void> deleteSetNote({required int id}) async {
+    await ensureDatabaseIsOpen();
     final db = _getDatabaseOrThrow();
     final deletedCount = await db.delete(
       setNotesTable,
@@ -274,6 +299,7 @@ class SetNotesService {
   }
 
   Future<int> deleteAllSetNotes() async {
+    await ensureDatabaseIsOpen();
     final db = _getDatabaseOrThrow();
     final deletedCount = await db.delete(
       setNotesTable,

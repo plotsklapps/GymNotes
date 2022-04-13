@@ -12,12 +12,6 @@ class _HomeScreenState extends State<HomeScreen> {
   String get userEmail => currentUser!.email!;
 
   @override
-  void initState() {
-    SetNotesService().openDatabaseSetNotes();
-    super.initState();
-  }
-
-  @override
   void dispose() {
     SetNotesService().closeDatabaseSetNotes();
     super.dispose();
@@ -70,22 +64,43 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            const Text('Welcome to Gymnotes!'),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  'musclegroup_screen',
-                );
-              },
-              child: const Text('Start New Workout'),
-            ),
-          ],
+      body: FutureBuilder(
+        future: SetNotesService().getOrCreateDatabaseUser(
+          email: userEmail,
         ),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              return StreamBuilder(
+                stream: SetNotesService().allSetNotes,
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            CircularProgressIndicator(
+                              strokeWidth: 12.0,
+                            ),
+                            SizedBox(height: 24.0),
+                            Text('Fetching your GymNotes...'),
+                          ],
+                        ),
+                      );
+                    default:
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                  }
+                },
+              );
+            default:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+          }
+        },
       ),
     );
   }
